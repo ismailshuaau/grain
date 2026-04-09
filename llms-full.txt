@@ -1,0 +1,267 @@
+# Grain v1.0.0 — Full LLM Reference
+# Token-efficient complete reference for AI code generation.
+# Source: graincss.com | License: MIT
+
+## IDENTITY
+framework: Grain
+prefix: gr-
+js_global: window.Grain
+js_data_attrs: data-grain-*
+files: grain.css, grain-lite.css, grain.js, grain-lite.js, /fonts/
+offline: true
+cdn: none
+google_fonts: none
+border_radius: 0 (by design)
+
+## TOKENS
+--gr-bg: #faf8f2
+--gr-ink: #0f0e0b
+--gr-mid: #9e9b91
+--gr-subtle: #e8e3d6
+--gr-accent: #b8973a
+--gr-accent2: #5a8fa8
+--gr-accent3: #6b8c52
+--gr-danger: #b03030
+--gr-surface: #eee8d8
+--gr-mono: 'Courier Prime','Courier New',monospace
+--gr-serif: 'Lora',Georgia,serif
+--gr-text-xs: 0.68rem
+--gr-text-sm: 0.78rem
+--gr-text-base: 0.92rem
+--gr-text-md: 1.05rem
+--gr-text-lg: 1.25rem
+--gr-text-xl: 1.6rem
+--gr-unit: 1rem
+--gr-noise-opacity: 0.035
+
+## BOILERPLATE
+<link rel="stylesheet" href="grain.css">  <!-- in <head> -->
+<script src="grain.js"></script>           <!-- before </body> -->
+<!-- lite: grain-lite.css + grain-lite.js -->
+
+## LAYOUT CLASSES
+gr-container        max-width 74ch centered
+gr-container--wide  max-width 100ch centered
+gr-page             padding 3.5rem top/bottom
+gr-stack            flex-direction column
+gr-stack--sm        gap 0.5rem
+gr-stack--md        gap 1rem
+gr-stack--lg        gap 2rem
+gr-row              flex-direction row align-items center
+gr-row--sm          gap 0.5rem
+gr-row--md          gap 1rem
+gr-row--lg          gap 2rem
+gr-row--between     justify-content space-between
+gr-row--wrap        flex-wrap wrap
+
+## GRID CLASSES (auto-fit, CSS Grid)
+gr-grid             auto-fit minmax 22ch
+gr-grid--xs         auto-fit minmax 10ch
+gr-grid--narrow     auto-fit minmax 14ch
+gr-grid--wide       auto-fit minmax 32ch
+gr-grid--xl         auto-fit minmax 44ch
+gr-grid--2          repeat(2, 1fr)
+gr-grid--3          repeat(3, 1fr)
+gr-grid--4          repeat(4, 1fr)
+gr-grid--gap-none   gap 0
+gr-grid--gap-sm     gap 0.5rem
+gr-grid--gap-md     gap 1rem
+gr-grid--gap-lg     gap 2rem
+gr-grid--gap-xl     gap 3rem
+gr-grid--top        align-items start
+gr-grid--middle     align-items center
+gr-grid--bottom     align-items end
+gr-grid--stretch    align-items stretch
+gr-span-2           grid-column span 2
+gr-span-3           grid-column span 3
+gr-span-full        grid-column 1/-1
+gr-self-top         align-self start
+gr-self-middle      align-self center
+gr-self-bottom      align-self end
+gr-self-stretch     align-self stretch
+
+## FRAME
+gr-frame            border 1px solid ink, + corners via ::before/::after
+gr-frame--dashed    border-style dashed
+gr-frame--subtle    border-color --gr-subtle
+gr-frame--accent    border-color --gr-accent
+gr-frame__body      padding 2.5rem 3rem
+gr-corner-tr        top-right + marker (span element)
+gr-corner-bl        bottom-left + marker (span element)
+
+## TOPBAR
+gr-topbar           terminal chrome bar
+gr-topbar__dots     dot row container
+gr-dot              circle dot
+gr-dot--red         background --gr-accent
+gr-dot--yellow      background #c9a84c
+gr-dot--green       background --gr-accent3
+
+## NAV
+gr-nav              flex row with bottom border
+gr-nav__link        nav link, add is-active for active state
+
+## SECTION / RULE
+gr-section-label    label + right trailing line
+gr-rule             centered label with lines both sides
+gr-rule--plain      single 1px horizontal line
+gr-rule--dashed     dashed horizontal line
+gr-rule__label      text inside gr-rule
+
+## TYPOGRAPHY
+gr-h1               mono bold 1.6rem
+gr-h2               mono bold 1.25rem
+gr-h3               mono bold 1.05rem
+gr-h4               mono bold 0.92rem
+gr-prose            serif body, line-height 1.85; p+p margin-top
+gr-label            mono uppercase xs letter-spacing 0.16em
+gr-label--accent    color --gr-accent
+gr-label--accent2   color --gr-accent2
+gr-label--accent3   color --gr-accent3
+gr-muted            color --gr-mid, font-size sm
+gr-code             mono sm, bg --gr-surface, color --gr-accent
+gr-pre              mono sm, bg --gr-surface, border subtle
+
+## BUTTONS
+gr-btn              base button, border ink
+gr-btn--primary     bg ink, color bg; hover: bg accent
+gr-btn--accent      border accent, color accent; hover: bg accent
+gr-btn--ghost       border subtle, color mid
+gr-btn--sm          smaller padding/font
+gr-btn--lg          larger padding/font
+gr-btn--bracket     ::before "[ ", ::after " ]"
+is-disabled         opacity 0.4, pointer-events none
+
+## BADGES / CHIPS / STATUS
+gr-badge            inline-flex, border subtle
+gr-badge--accent    border+color --gr-accent
+gr-badge--accent2   border+color --gr-accent2
+gr-badge--accent3   border+color --gr-accent3
+gr-badge--filled    bg ink, color bg
+gr-chip             hoverable badge
+gr-status           inline-flex with dot ::before
+gr-status--active   color --gr-accent3, dot pulses
+gr-status--warning  color #c9a84c
+gr-status--error    color --gr-danger
+gr-status--neutral  color --gr-mid, no pulse
+
+## CARDS
+gr-card             border subtle, padding 1.5rem
+gr-card--accent     hover: border --gr-accent
+gr-card__label      mono xs uppercase accent
+gr-card__title      mono bold base
+gr-card__body       serif sm italic mid
+gr-card__footer     flex between, border-top dashed
+
+## LIST
+gr-list             list-style none
+gr-list__item       grid 3ch 1fr, border-bottom dashed
+gr-list__idx        mono sm mid
+gr-list__title      mono bold base
+gr-list__desc       serif sm italic mid
+
+## FORMS
+gr-field            flex column gap 0.4rem
+gr-field__label     mono xs uppercase mid
+gr-input            mono base, border subtle; focus: border accent
+gr-textarea         mono base, min-height 8rem, resize vertical
+gr-select           mono base, border subtle
+gr-field__hint      serif xs italic mid
+gr-field__error     mono xs --gr-danger
+
+## CURSOR
+gr-cursor           0.5em × 0.85em block, bg accent, blinks
+gr-cursor--ink      bg --gr-ink
+gr-cursor--accent2  bg --gr-accent2
+gr-cursor--slow     animation 1.6s
+gr-cursor--fast     animation 0.5s
+
+## ASCII
+gr-ascii            white-space pre, mono 0.65rem
+gr-ascii--accent    color --gr-accent
+gr-ascii--accent2   color --gr-accent2
+gr-ascii--mid       color --gr-mid
+
+## TABS (requires JS, data-grain-tabs)
+gr-tabs             container
+gr-tabs__nav        tab row
+gr-tabs__tab        tab button; is-active = active
+gr-tabs__panel      panel div; is-active = visible
+data-tab="name"     on button
+data-panel="name"   on panel
+data-grain-tabs     on container
+
+## MODAL (requires JS)
+gr-modal-overlay    fixed overlay; is-open = visible
+gr-modal            modal box
+gr-modal__header    header bar
+gr-modal__close     × button (data-grain-modal-close)
+gr-modal__body      content area
+gr-modal__footer    action row
+data-grain-modal-open="id"   on trigger button
+data-grain-modal             on overlay div
+data-grain-modal-close       on close/cancel buttons
+JS: Grain.modal.open('id') / Grain.modal.close('id')
+
+## TOAST (requires JS)
+data-grain-toast="msg"       HTML trigger
+data-toast-type="success"    type on trigger
+JS: Grain.toast(msg, {type, duration})
+types: default | success | warning | error
+
+## DROPDOWN (requires JS, data-grain-dropdown)
+gr-dropdown         relative container
+gr-dropdown__menu   absolute menu; is-open = visible
+gr-dropdown__item   menu button
+gr-dropdown__divider horizontal rule
+data-dropdown-trigger   on toggle button
+data-grain-dropdown     on container
+
+## TABLE
+gr-table            width 100%, border-collapse collapse
+th                  mono xs uppercase accent, border-bottom ink
+td                  border-bottom dashed subtle
+tr:hover td         bg --gr-surface
+
+## PROGRESS
+gr-progress         wrapper
+gr-progress__label  flex between, mono xs mid
+gr-progress__bar    4px height, bg --gr-subtle
+gr-progress__fill   height 100%, bg --gr-accent
+gr-progress__fill--accent2   bg --gr-accent2
+gr-progress__fill--accent3   bg --gr-accent3
+
+## TYPEWRITER (full JS only)
+data-grain-type="text"       on any element
+data-type-speed="50"         ms per character
+
+## UTILITIES
+gr-text-accent | gr-text-accent2 | gr-text-accent3 | gr-text-mid | gr-text-ink
+gr-mt-sm (0.5rem) | gr-mt-md (1rem) | gr-mt-lg (2rem)
+gr-mb-sm | gr-mb-md | gr-mb-lg
+gr-hidden | gr-sr-only
+gr-animate-in (fadeIn 0.4s) | gr-animate-up (fadeUp 0.4s)
+gr-delay-1 (0.1s) | gr-delay-2 | gr-delay-3 | gr-delay-4 | gr-delay-5 (0.5s)
+
+## NEVER
+- Invent gr- classes not in this list
+- Use data-caret-* (deprecated prefix)
+- Import Google Fonts
+- Add border-radius
+- Mix Bootstrap/Tailwind with Grain
+
+## PATTERNS
+
+### Frame with topbar (recommended shell)
+<div class="gr-frame"><span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+<div class="gr-topbar"><div class="gr-topbar__dots"><span class="gr-dot gr-dot--red"></span><span class="gr-dot gr-dot--yellow"></span><span class="gr-dot gr-dot--green"></span></div><span>title.sh</span><span class="gr-status gr-status--active">status</span></div>
+<div class="gr-frame__body"><!-- content --></div></div>
+
+### Project grid
+<div class="gr-section-label">work</div>
+<div class="gr-grid"><div class="gr-card gr-card--accent"><div class="gr-card__label">cat</div><div class="gr-card__title">Title</div><div class="gr-card__body">Desc.</div><div class="gr-card__footer"><span class="gr-badge gr-badge--accent">tag</span><a href="#" class="gr-btn gr-btn--ghost gr-btn--sm">view →</a></div></div></div>
+
+### Stat cards
+<div class="gr-grid gr-grid--3"><div class="gr-card"><div class="gr-card__label">metric</div><div class="gr-card__title">91%</div><div class="gr-progress gr-mt-sm"><div class="gr-progress__bar"><div class="gr-progress__fill" style="width:91%"></div></div></div></div></div>
+
+END OF GRAIN LLMS-FULL.TXT

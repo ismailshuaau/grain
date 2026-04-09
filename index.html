@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grain — Offline-first UI Framework</title>
+  <!--
+    GRAIN v1.0.0
+    This page works fully offline.
+    All fonts are loaded from /fonts/ — no internet required.
+    To use lite mode on older devices, swap these two lines:
+      grain-lite.css instead of grain.css
+      grain-lite.js  instead of grain.js
+  -->
+  <link rel="stylesheet" href="grain.css" />
+  <style>
+    /* Demo page layout only */
+    .demo-sidebar {
+      width: 20ch;
+      flex-shrink: 0;
+      border-right: 1px solid var(--gr-subtle);
+      padding: 2rem 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .demo-main {
+      flex: 1;
+      max-width: 72ch;
+      padding: 4rem 4rem;
+      overflow-x: hidden;
+    }
+    .demo-section {
+      padding: 3rem 0;
+      border-bottom: 1px dashed var(--gr-subtle);
+    }
+    .demo-section:last-child { border-bottom: none; }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
+      gap: 1rem;
+    }
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .demo-note {
+      font-family: var(--gr-mono);
+      font-size: var(--gr-text-xs);
+      color: var(--gr-mid);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .swatch__box { width: 2rem; height: 2rem; flex-shrink: 0; }
+    .swatch__label { font-family: var(--gr-mono); font-size: 0.7rem; color: var(--gr-mid); }
+    body { padding: 0; }
+    .demo-wrapper { display: flex; min-height: 100vh; }
+    .sidebar-link { font-family: var(--gr-mono); font-size: 0.7rem; color: var(--gr-mid); text-decoration: none; display: block; padding: 0.35rem 0; border-bottom: none; }
+    .sidebar-link:hover { color: var(--gr-accent); text-decoration: none; }
+    @media (max-width: 700px) {
+      .demo-sidebar { display: none; }
+      .demo-main { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="demo-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="demo-sidebar">
+    <pre class="gr-ascii gr-ascii--accent" style="font-size:0.62rem; line-height:1.25; margin-bottom:0.75rem; letter-spacing:0.05em;">
+[  GRAIN  ]
+</pre>
+    <p class="gr-label gr-label--accent" style="margin-bottom:1.5rem; letter-spacing:0.1em;">v1.0.0</p>
+
+    <a class="sidebar-link" href="#start">get started</a>
+    <a class="sidebar-link" href="#tokens">tokens</a>
+    <a class="sidebar-link" href="#typography">typography</a>
+    <a class="sidebar-link" href="#frame">frame</a>
+    <a class="sidebar-link" href="#topbar">topbar</a>
+    <a class="sidebar-link" href="#nav">nav</a>
+    <a class="sidebar-link" href="#buttons">buttons</a>
+    <a class="sidebar-link" href="#badges">badges & chips</a>
+    <a class="sidebar-link" href="#cards">cards</a>
+    <a class="sidebar-link" href="#list">list</a>
+    <a class="sidebar-link" href="#forms">forms</a>
+    <a class="sidebar-link" href="#tabs">tabs</a>
+    <a class="sidebar-link" href="#modal">modal</a>
+    <a class="sidebar-link" href="#toast">toast</a>
+    <a class="sidebar-link" href="#dropdown">dropdown</a>
+    <a class="sidebar-link" href="#table">table</a>
+    <a class="sidebar-link" href="#progress">progress</a>
+    <a class="sidebar-link" href="#cursor">cursor</a>
+    <a class="sidebar-link" href="#grid">grid</a>
+    <a class="sidebar-link" href="#ascii">ascii art</a>
+
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px dashed var(--gr-subtle);">
+      <span class="gr-status gr-status--active" style="font-size:0.65rem;">offline-first</span>
+      <p class="gr-muted gr-mt-sm" style="font-size:0.65rem; line-height:1.6;">MIT license</p>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="demo-main">
+
+    <!-- Hero -->
+    <div class="gr-mb-lg" id="start">
+      <h1 class="gr-h1">grain<span class="gr-cursor"></span></h1>
+      <p class="gr-muted" style="font-size:var(--gr-text-base); margin-bottom:0.75rem; font-family:var(--gr-mono); letter-spacing:0.04em;">
+        Built into everything. Dependent on nothing.
+      </p>
+      <p class="gr-prose" style="margin-bottom:1.25rem;">
+        Deploy like infrastructure. Adopt like a framework. Copy a folder, serve a page — no internet required, no ongoing dependency on anything outside the folder you already copied.
+      </p>
+
+      <div class="gr-frame gr-frame--subtle gr-mb-md">
+        <span class="gr-corner-tr"></span>
+        <span class="gr-corner-bl"></span>
+        <div class="gr-frame__body" style="padding:1.25rem 1.5rem;">
+          <p class="demo-note">full version (modern devices)</p>
+          <code class="gr-code" style="display:block; margin-bottom:0.4rem;">&lt;link rel="stylesheet" href="grain.css"&gt;</code>
+          <code class="gr-code" style="display:block;">&lt;script src="grain.js"&gt;&lt;/script&gt;</code>
+          <div style="height:1rem;"></div>
+          <p class="demo-note">lite version (old devices / low-power)</p>
+          <code class="gr-code" style="display:block; margin-bottom:0.4rem;">&lt;link rel="stylesheet" href="grain-lite.css"&gt;</code>
+          <code class="gr-code" style="display:block;">&lt;script src="grain-lite.js"&gt;&lt;/script&gt;</code>
+        </div>
+      </div>
+
+      <div class="demo-row">
+        <span class="gr-badge">offline-first</span>
+        <span class="gr-badge">no CDN</span>
+        <span class="gr-badge">self-hosted fonts</span>
+        <span class="gr-badge">~103kb fonts</span>
+        <span class="gr-badge">MIT license</span>
+      </div>
+    </div>
+
+    <!-- TOKENS -->
+    <div class="demo-section" id="tokens">
+      <div class="gr-section-label">tokens</div>
+      <div class="demo-grid">
+        <div>
+          <p class="demo-note">colors</p>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-bg); border:1px solid var(--gr-subtle);"></div><span class="swatch__label">--gr-bg · #faf8f2</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-ink);"></div><span class="swatch__label">--gr-ink · #0f0e0b</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-mid);"></div><span class="swatch__label">--gr-mid · #9e9b91</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-subtle); border:1px solid var(--gr-subtle);"></div><span class="swatch__label">--gr-subtle · #e8e3d6</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-accent);"></div><span class="swatch__label">--gr-accent · #b8973a</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-accent2);"></div><span class="swatch__label">--gr-accent2 · #5a8fa8</span></div>
+          <div class="swatch"><div class="swatch__box" style="background:var(--gr-accent3);"></div><span class="swatch__label">--gr-accent3 · #6b8c52</span></div>
+        </div>
+        <div>
+          <p class="demo-note">typography</p>
+          <p style="font-family:var(--gr-mono); font-size:0.9rem; margin-bottom:0.5rem;">Courier Prime — mono<br><span style="color:var(--gr-mid);">self-hosted · OFL license</span></p>
+          <p style="font-family:var(--gr-serif); font-size:0.9rem; font-style:italic;">Lora — serif body<br><span style="color:var(--gr-mid); font-style:normal;">self-hosted · OFL license</span></p>
+          <div style="height:1rem;"></div>
+          <p class="demo-note">override colors</p>
+          <pre class="gr-pre" style="font-size:0.65rem;">:root {
+  --gr-accent: #your-color;
+  --gr-bg:     #your-bg;
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TYPOGRAPHY -->
+    <div class="demo-section" id="typography">
+      <div class="gr-section-label">typography</div>
+      <h1 class="gr-h1">Heading One</h1>
+      <h2 class="gr-h2">Heading Two</h2>
+      <h3 class="gr-h3">Heading Three</h3>
+      <h4 class="gr-h4">Heading Four</h4>
+      <hr class="gr-rule gr-rule--plain gr-mt-md gr-mb-md" />
+      <div class="gr-prose">
+        <p>Body copy set in Lora serif. The tension between monospace structure and humanist type is intentional — it reads like a document that knows what it is.</p>
+        <p>Paragraphs breathe at 1.85 line-height. <em>Italic text holds its own.</em> <strong>Bold is spare.</strong></p>
+      </div>
+      <hr class="gr-rule gr-rule--plain gr-mt-md gr-mb-md" />
+      <p class="gr-label gr-mb-sm">small label · uppercase mono</p>
+      <p class="gr-label gr-label--accent gr-mb-sm">accent label</p>
+      <p class="gr-muted">Muted text for secondary content.</p>
+    </div>
+
+    <!-- FRAME -->
+    <div class="demo-section" id="frame">
+      <div class="gr-section-label">frame</div>
+      <div class="gr-stack gr-stack--md">
+        <div class="gr-frame">
+          <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+          <div class="gr-frame__body"><p class="gr-prose">Default — solid border, copper corners.</p></div>
+        </div>
+        <div class="gr-frame gr-frame--dashed gr-frame--subtle">
+          <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+          <div class="gr-frame__body"><p class="gr-prose">Dashed subtle frame.</p></div>
+        </div>
+        <div class="gr-frame gr-frame--accent">
+          <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+          <div class="gr-frame__body"><p class="gr-prose">Accent border frame.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="demo-section" id="topbar">
+      <div class="gr-section-label">topbar</div>
+      <div class="gr-frame">
+        <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+        <div class="gr-topbar">
+          <div class="gr-topbar__dots">
+            <span class="gr-dot gr-dot--red"></span>
+            <span class="gr-dot gr-dot--yellow"></span>
+            <span class="gr-dot gr-dot--green"></span>
+          </div>
+          <span>school-intranet.local</span>
+          <span class="gr-status gr-status--active">online</span>
+        </div>
+        <div class="gr-frame__body">
+          <p class="gr-prose">Terminal chrome. Pairs naturally with <code class="gr-code">.gr-frame</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="demo-section" id="nav">
+      <div class="gr-section-label">nav</div>
+      <nav class="gr-nav">
+        <a href="#" class="gr-nav__link is-active">~/home</a>
+        <a href="#" class="gr-nav__link">~/resources</a>
+        <a href="#" class="gr-nav__link">~/contact</a>
+      </nav>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="demo-section" id="buttons">
+      <div class="gr-section-label">buttons</div>
+      <div class="demo-row gr-mb-md">
+        <button class="gr-btn">default</button>
+        <button class="gr-btn gr-btn--primary">primary</button>
+        <button class="gr-btn gr-btn--accent">accent</button>
+        <button class="gr-btn gr-btn--ghost">ghost</button>
+        <button class="gr-btn" disabled>disabled</button>
+      </div>
+      <div class="demo-row gr-mb-md">
+        <button class="gr-btn gr-btn--sm">small</button>
+        <button class="gr-btn">default</button>
+        <button class="gr-btn gr-btn--lg">large</button>
+      </div>
+      <div class="demo-row gr-mb-md">
+        <button class="gr-btn gr-btn--bracket">bracket</button>
+        <button class="gr-btn gr-btn--primary gr-btn--bracket">primary bracket</button>
+      </div>
+      <div class="demo-row">
+        <button class="gr-btn gr-btn--loading">loading</button>
+        <button class="gr-btn gr-btn--primary gr-btn--loading">saving</button>
+        <span class="gr-muted" style="font-size:var(--gr-text-xs);">Tab to see focus ring →</span>
+      </div>
+    </div>
+
+    <!-- BADGES -->
+    <div class="demo-section" id="badges">
+      <div class="gr-section-label">badges & chips</div>
+      <p class="demo-note gr-mb-sm">badges</p>
+      <div class="demo-row gr-mb-md">
+        <span class="gr-badge">default</span>
+        <span class="gr-badge gr-badge--accent">accent</span>
+        <span class="gr-badge gr-badge--accent2">accent2</span>
+        <span class="gr-badge gr-badge--accent3">accent3</span>
+        <span class="gr-badge gr-badge--filled">filled</span>
+      </div>
+      <p class="demo-note gr-mb-sm">chips (hover)</p>
+      <div class="demo-row gr-mb-md">
+        <span class="gr-chip">offline-first</span>
+        <span class="gr-chip">open source</span>
+        <span class="gr-chip">no CDN</span>
+        <span class="gr-chip">MIT</span>
+      </div>
+      <p class="demo-note gr-mb-sm">status</p>
+      <div class="demo-row">
+        <span class="gr-status gr-status--active">active</span>
+        <span class="gr-status gr-status--warning">pending</span>
+        <span class="gr-status gr-status--error">error</span>
+        <span class="gr-status gr-status--neutral">offline</span>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="demo-section" id="cards">
+      <div class="gr-section-label">cards</div>
+      <div class="demo-grid">
+        <div class="gr-card gr-card--accent">
+          <div class="gr-card__label">resource</div>
+          <div class="gr-card__title">Kolibri Integration</div>
+          <div class="gr-card__body">UI layer for offline Kolibri deployments in low-bandwidth schools.</div>
+          <div class="gr-card__footer">
+            <span class="gr-badge gr-badge--accent3">offline</span>
+            <a href="#" class="gr-btn gr-btn--ghost gr-btn--sm">view →</a>
+          </div>
+        </div>
+        <div class="gr-card gr-card--accent">
+          <div class="gr-card__label">tool</div>
+          <div class="gr-card__title">Local Dashboard</div>
+          <div class="gr-card__body">School intranet dashboard built with Grain on a Raspberry Pi server.</div>
+          <div class="gr-card__footer">
+            <span class="gr-badge gr-badge--accent2">intranet</span>
+            <a href="#" class="gr-btn gr-btn--ghost gr-btn--sm">view →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="demo-section" id="list">
+      <div class="gr-section-label">list</div>
+      <ul class="gr-list">
+        <li class="gr-list__item">
+          <span class="gr-list__idx">01.</span>
+          <div><div class="gr-list__title">School Intranet Portal</div><div class="gr-list__desc">Student resources, timetables, announcements</div></div>
+        </li>
+        <li class="gr-list__item">
+          <span class="gr-list__idx">02.</span>
+          <div><div class="gr-list__title">NGO Field Dashboard</div><div class="gr-list__desc">Data collection and reporting for field workers</div></div>
+        </li>
+        <li class="gr-list__item">
+          <span class="gr-list__idx">03.</span>
+          <div><div class="gr-list__title">Community Health Tool</div><div class="gr-list__desc">Patient records on a local mesh network</div></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- FORMS -->
+    <div class="demo-section" id="forms">
+      <div class="gr-section-label">forms</div>
+      <div class="gr-stack gr-stack--md" style="max-width:48ch;">
+        <div class="gr-field">
+          <label class="gr-field__label">name</label>
+          <input class="gr-input" type="text" placeholder="student name" />
+        </div>
+        <div class="gr-field">
+          <label class="gr-field__label">class</label>
+          <input class="gr-input" type="text" placeholder="grade / class" />
+          <span class="gr-field__hint">Used for roster lookup.</span>
+        </div>
+        <div class="gr-field">
+          <label class="gr-field__label">subject</label>
+          <div class="gr-select-wrap">
+            <select class="gr-select">
+              <option value="">select subject...</option>
+              <option>Mathematics</option>
+              <option>Science</option>
+              <option>English</option>
+              <option>History</option>
+            </select>
+          </div>
+        </div>
+        <div class="gr-field">
+          <label class="gr-field__label">notes</label>
+          <textarea class="gr-textarea" placeholder="additional notes..."></textarea>
+        </div>
+        <div class="gr-field">
+          <label class="gr-field__label">error state</label>
+          <input class="gr-input" type="text" value="invalid" style="border-color:var(--gr-danger);" />
+          <span class="gr-field__error">this field is required</span>
+        </div>
+        <div class="demo-row">
+          <button class="gr-btn gr-btn--primary">submit</button>
+          <button class="gr-btn gr-btn--primary gr-btn--loading">saving</button>
+          <button class="gr-btn gr-btn--ghost">cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="demo-section" id="tabs">
+      <div class="gr-section-label">tabs</div>
+      <div class="gr-tabs" data-grain-tabs>
+        <div class="gr-tabs__nav">
+          <button class="gr-tabs__tab is-active" data-tab="about">about</button>
+          <button class="gr-tabs__tab" data-tab="usage">usage</button>
+          <button class="gr-tabs__tab" data-tab="deploy">deploy</button>
+        </div>
+        <div class="gr-tabs__panel is-active" data-panel="about">
+          <p class="gr-prose">Grain is built for places where bootstrap fails — not because it can't load, but because it assumes a connection that doesn't exist.</p>
+        </div>
+        <div class="gr-tabs__panel" data-panel="usage">
+          <code class="gr-code" style="display:block;">&lt;link rel="stylesheet" href="grain.css"&gt;</code>
+        </div>
+        <div class="gr-tabs__panel" data-panel="deploy">
+          <p class="gr-prose">Copy the folder to your server. Open index.html. That's it. Works on Apache, Nginx, Python's http.server, or directly from a USB drive.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="demo-section" id="modal">
+      <div class="gr-section-label">modal</div>
+      <button class="gr-btn gr-btn--primary" data-grain-modal-open="demo-modal">open modal</button>
+    </div>
+
+    <!-- TOAST -->
+    <div class="demo-section" id="toast">
+      <div class="gr-section-label">toast</div>
+      <div class="demo-row">
+        <button class="gr-btn" data-grain-toast="message sent." data-toast-type="default">default</button>
+        <button class="gr-btn gr-btn--accent" data-grain-toast="saved successfully." data-toast-type="success">success</button>
+        <button class="gr-btn" style="border-color:#c9a84c;color:#c9a84c;" data-grain-toast="check your input." data-toast-type="warning">warning</button>
+        <button class="gr-btn" style="border-color:var(--gr-danger);color:var(--gr-danger);" data-grain-toast="something went wrong." data-toast-type="error">error</button>
+      </div>
+    </div>
+
+    <!-- DROPDOWN -->
+    <div class="demo-section" id="dropdown">
+      <div class="gr-section-label">dropdown</div>
+      <div class="gr-dropdown" data-grain-dropdown>
+        <button class="gr-btn" data-dropdown-trigger>options ▾</button>
+        <div class="gr-dropdown__menu">
+          <button class="gr-dropdown__item">edit</button>
+          <button class="gr-dropdown__item">duplicate</button>
+          <div class="gr-dropdown__divider"></div>
+          <button class="gr-dropdown__item" style="color:var(--gr-danger);">delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="demo-section" id="table">
+      <div class="gr-section-label">table</div>
+      <table class="gr-table">
+        <thead>
+          <tr><th>name</th><th>role</th><th>status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Aisha Mohammed</td>
+            <td><span class="gr-badge">teacher</span></td>
+            <td><span class="gr-status gr-status--active">active</span></td>
+          </tr>
+          <tr>
+            <td>James Okonkwo</td>
+            <td><span class="gr-badge">admin</span></td>
+            <td><span class="gr-status gr-status--active">active</span></td>
+          </tr>
+          <tr>
+            <td>Priya Sharma</td>
+            <td><span class="gr-badge">student</span></td>
+            <td><span class="gr-status gr-status--warning">pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="demo-section" id="progress">
+      <div class="gr-section-label">progress</div>
+      <div class="gr-stack gr-stack--md" style="max-width:48ch;">
+        <div class="gr-progress">
+          <div class="gr-progress__label"><span>literacy rate</span><span>72%</span></div>
+          <div class="gr-progress__bar"><div class="gr-progress__fill" style="width:72%;"></div></div>
+        </div>
+        <div class="gr-progress">
+          <div class="gr-progress__label"><span>device coverage</span><span>58%</span></div>
+          <div class="gr-progress__bar"><div class="gr-progress__fill gr-progress__fill--accent2" style="width:58%;"></div></div>
+        </div>
+        <div class="gr-progress">
+          <div class="gr-progress__label"><span>offline readiness</span><span>91%</span></div>
+          <div class="gr-progress__bar"><div class="gr-progress__fill gr-progress__fill--accent3" style="width:91%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSOR -->
+    <div class="demo-section" id="cursor">
+      <div class="gr-section-label">cursor</div>
+      <div class="gr-stack gr-stack--sm">
+        <p>default<span class="gr-cursor"></span></p>
+        <p>ink<span class="gr-cursor gr-cursor--ink"></span></p>
+        <p>blue<span class="gr-cursor gr-cursor--accent2"></span></p>
+        <p>slow<span class="gr-cursor gr-cursor--slow"></span></p>
+        <p>fast<span class="gr-cursor gr-cursor--fast"></span></p>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="demo-section" id="grid">
+      <div class="gr-section-label">grid</div>
+
+      <p class="demo-note gr-mb-md">default — auto-fit min 22ch</p>
+      <div class="gr-grid gr-mb-md">
+        <div class="gr-card"><div class="gr-card__label">item</div><div class="gr-card__title">Auto</div><div class="gr-card__body">Columns form based on available space.</div></div>
+        <div class="gr-card"><div class="gr-card__label">item</div><div class="gr-card__title">Fit</div><div class="gr-card__body">No breakpoint math required.</div></div>
+        <div class="gr-card"><div class="gr-card__label">item</div><div class="gr-card__title">Grid</div><div class="gr-card__body">Add more items — layout adjusts.</div></div>
+      </div>
+
+      <p class="demo-note gr-mb-md">narrow — min 14ch</p>
+      <div class="gr-grid gr-grid--narrow gr-grid--gap-sm gr-mb-md">
+        <span class="gr-badge gr-badge--accent">tag one</span>
+        <span class="gr-badge">tag two</span>
+        <span class="gr-badge gr-badge--accent3">tag three</span>
+        <span class="gr-badge gr-badge--accent2">tag four</span>
+        <span class="gr-badge">tag five</span>
+        <span class="gr-badge gr-badge--filled">tag six</span>
+      </div>
+
+      <p class="demo-note gr-mb-md">wide — min 32ch, gap-lg</p>
+      <div class="gr-grid gr-grid--wide gr-grid--gap-lg gr-mb-md">
+        <div class="gr-frame gr-frame--subtle">
+          <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+          <div class="gr-frame__body" style="padding:1.25rem 1.5rem;">
+            <p class="gr-label gr-label--accent gr-mb-sm">wide column a</p>
+            <p class="gr-prose">Content with breathing room. Wide columns suit long-form reading contexts.</p>
+          </div>
+        </div>
+        <div class="gr-frame gr-frame--subtle">
+          <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+          <div class="gr-frame__body" style="padding:1.25rem 1.5rem;">
+            <p class="gr-label gr-label--accent gr-mb-sm">wide column b</p>
+            <p class="gr-prose">Resize the window to watch both columns collapse into one below ~32ch.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="demo-note gr-mb-md">gr-grid--3 with spanning</p>
+      <div class="gr-grid gr-grid--3 gr-mb-md">
+        <div class="gr-card gr-span-2"><div class="gr-card__label">span-2</div><div class="gr-card__title">Featured</div><div class="gr-card__body">Spans two columns. Use .gr-span-2 on the item.</div></div>
+        <div class="gr-card"><div class="gr-card__label">col</div><div class="gr-card__title">Side</div><div class="gr-card__body">Single column item.</div></div>
+        <div class="gr-card gr-span-full"><div class="gr-card__label">span-full</div><div class="gr-card__title">Full Width</div><div class="gr-card__body">Spans all columns with .gr-span-full.</div></div>
+      </div>
+
+      <p class="demo-note gr-mb-md">alignment — gr-grid--middle</p>
+      <div class="gr-grid gr-grid--3 gr-grid--middle gr-grid--gap-sm">
+        <div class="gr-card"><div class="gr-card__title">Short</div></div>
+        <div class="gr-card"><div class="gr-card__title">Medium height card</div><div class="gr-card__body">A bit more content here to make it taller.</div></div>
+        <div class="gr-card"><div class="gr-card__title">Short</div></div>
+      </div>
+
+      <div class="gr-mt-md gr-frame gr-frame--subtle">
+        <span class="gr-corner-tr"></span><span class="gr-corner-bl"></span>
+        <div class="gr-frame__body" style="padding:1rem 1.5rem;">
+          <p class="demo-note gr-mb-sm">quick reference</p>
+          <code class="gr-code" style="display:block; margin-bottom:0.35rem;">.gr-grid                   auto-fit min 22ch</code>
+          <code class="gr-code" style="display:block; margin-bottom:0.35rem;">.gr-grid .gr-grid--narrow  auto-fit min 14ch</code>
+          <code class="gr-code" style="display:block; margin-bottom:0.35rem;">.gr-grid .gr-grid--wide    auto-fit min 32ch</code>
+          <code class="gr-code" style="display:block; margin-bottom:0.35rem;">.gr-grid .gr-grid--2/3/4   fixed columns</code>
+          <code class="gr-code" style="display:block; margin-bottom:0.35rem;">.gr-span-2/3/full          item spanning</code>
+          <code class="gr-code" style="display:block;">.gr-grid--gap-none/sm/md/lg/xl</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASCII ART -->
+    <div class="demo-section" id="ascii">
+      <div class="gr-section-label">ascii art</div>
+      <pre class="gr-ascii gr-ascii--accent">
+ ___  _   ___ ___ _____
+/ __|| | | _ \ __|_   _|
+| (__ | |_|   / _|  | |
+\___||___|_|_\___| |_|</pre>
+      <p class="gr-muted gr-mt-md" style="font-size:0.75rem;">
+        Use <code class="gr-code">.gr-ascii</code> with <code class="gr-code">.gr-ascii--accent</code> or <code class="gr-code">.gr-ascii--mid</code>.
+        Pair with typewriter via <code class="gr-code">data-grain-type</code> (full version only).
+      </p>
+    </div>
+
+    <!-- Typewriter -->
+    <div class="demo-section">
+      <div class="gr-section-label">typewriter</div>
+      <p style="font-family:var(--gr-mono); font-size:var(--gr-text-base);">
+        <span data-grain-type="built for communities that don't get enough of either." data-type-speed="40"></span><span class="gr-cursor gr-cursor--slow"></span>
+      </p>
+      <p class="gr-muted gr-mt-md" style="font-size:0.75rem;">Add <code class="gr-code">data-grain-type="your text"</code> to any element. Full version only.</p>
+    </div>
+
+    <!-- GRID -->
+    <div class="demo-section" id="grid">
+      <div class="gr-section-label">grid</div>
+
+      <p class="demo-note gr-mb-sm">default — auto-fit, min 22ch</p>
+      <div class="gr-grid gr-mb-md">
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+      </div>
+
+      <p class="demo-note gr-mb-sm">gr-grid--narrow — min 16ch (more columns)</p>
+      <div class="gr-grid gr-grid--narrow gr-mb-md">
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:0.75rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:0.75rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:0.75rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:0.75rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+      </div>
+
+      <p class="demo-note gr-mb-sm">gr-grid--wide — min 32ch (fewer, wider columns)</p>
+      <div class="gr-grid gr-grid--wide gr-mb-md">
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+      </div>
+
+      <p class="demo-note gr-mb-sm">gr-grid--2 · gr-grid--3 — explicit counts</p>
+      <div class="gr-grid gr-grid--2 gr-mb-md">
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">always 2</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">always 2</div>
+      </div>
+      <div class="gr-grid gr-grid--3 gr-mb-md">
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">always 3</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">always 3</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">always 3</div>
+      </div>
+
+      <p class="demo-note gr-mb-sm">gr-span-full — spanning</p>
+      <div class="gr-grid gr-grid--3 gr-mb-md">
+        <div class="gr-span-full" style="background:var(--gr-surface); border:1px dashed var(--gr-accent); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-accent);">gr-span-full</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+        <div style="background:var(--gr-surface); border:1px dashed var(--gr-subtle); padding:1rem; font-family:var(--gr-mono); font-size:var(--gr-text-xs); color:var(--gr-mid);">col</div>
+      </div>
+
+      <p class="demo-note gr-mb-sm">real-world — cards in a grid</p>
+      <div class="gr-grid">
+        <div class="gr-card gr-card--accent">
+          <div class="gr-card__label">school</div>
+          <div class="gr-card__title">Semanhyiya School</div>
+          <div class="gr-card__body">Deployed on local intranet. 340 students, zero internet dependency.</div>
+        </div>
+        <div class="gr-card gr-card--accent">
+          <div class="gr-card__label">NGO</div>
+          <div class="gr-card__title">Field Dashboard</div>
+          <div class="gr-card__body">Health worker data collection on a Raspberry Pi mesh network.</div>
+        </div>
+        <div class="gr-card gr-card--accent">
+          <div class="gr-card__label">community</div>
+          <div class="gr-card__title">Resource Portal</div>
+          <div class="gr-card__body">Village information board served from a solar-powered server.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- Modal -->
+<div class="gr-modal-overlay" id="demo-modal" data-grain-modal>
+  <div class="gr-modal">
+    <div class="gr-modal__header">
+      <span>grain.sh — offline-first</span>
+      <button class="gr-modal__close" data-grain-modal-close>×</button>
+    </div>
+    <div class="gr-modal__body">
+      <p class="gr-prose">This modal works entirely offline. No external scripts. No CDN. Close with the button, the × above, clicking outside, or pressing Escape.</p>
+    </div>
+    <div class="gr-modal__footer">
+      <button class="gr-btn gr-btn--ghost" data-grain-modal-close>close</button>
+      <button class="gr-btn gr-btn--primary" data-grain-modal-close>got it</button>
+    </div>
+  </div>
+</div>
+
+<script src="grain.js"></script>
+</body>
+</html>

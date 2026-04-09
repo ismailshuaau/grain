@@ -1,0 +1,43 @@
+# Grain
+
+> Infrastructure for the offline web. Deploy like infrastructure. Adopt like a framework.
+
+Grain is an offline-first CSS + JS UI framework built for schools, NGOs, and developers who need UI that runs without internet. All classes use the `gr-` prefix. Self-hosted fonts included. Zero external dependencies.
+
+## Core Files
+
+- [AGENTS.md](AGENTS.md): Complete AI coding instructions — class reference, patterns, rules
+- [grain.css](dist/grain.css): Full framework stylesheet (modern browsers)
+- [grain-lite.css](dist/grain-lite.css): Lite stylesheet (old browsers, no animations)
+- [grain.js](dist/grain.js): Interactive components (tabs, modal, toast, dropdown)
+- [grain-lite.js](dist/grain-lite.js): Lite JS (tabs, modal, dropdown only)
+- [README.md](README.md): Installation and quick start
+- [CHANGELOG.md](CHANGELOG.md): Version history
+
+## Documentation
+
+- [index.html](docs/index.html): Living documentation — all components with examples
+- [llms-full.txt](llms-full.txt): Complete token-efficient reference for AI code generation
+
+## Key Concepts
+
+- All CSS classes are prefixed `gr-` (e.g. `gr-btn`, `gr-grid`, `gr-frame`)
+- JS data attributes use `data-grain-*` prefix
+- JS global: `window.Grain`
+- Two distribution modes: full (`grain.css`) and lite (`grain-lite.css`)
+- Fonts self-hosted in `/fonts/` — no Google Fonts, no CDN
+- Color tokens: `--gr-bg`, `--gr-ink`, `--gr-accent`, `--gr-accent2`, `--gr-accent3`
+- Primary accent: burnt sienna `#b85c38`
+- Zero border-radius by design
+
+## Use Cases
+
+- School intranets on local servers
+- NGO field dashboards on mesh networks
+- USB-deployable web tools
+- Developer portfolios with terminal aesthetic
+- Any web project requiring offline-first, dependency-free UI
+
+## License
+
+MIT — Grain v1.0.0

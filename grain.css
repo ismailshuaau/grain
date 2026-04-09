@@ -1,0 +1,1086 @@
+/* ============================================================
+   GRAIN.CSS v1.0.0 — Full
+   Built into everything. Dependent on nothing.
+   ============================================================
+   Deploy like infrastructure. Adopt like a framework.
+   Fonts self-hosted in /fonts/ — no CDN, no internet required.
+   Works on local intranets, mesh networks, USB deployments,
+   and every modern browser.
+   ============================================================ */
+
+/* ── Self-hosted fonts ── */
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('fonts/courier-prime-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('fonts/courier-prime-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('fonts/courier-prime-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('fonts/lora-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('fonts/lora-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora';
+  src: url('fonts/lora-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+:root {
+  /* Color — Ember palette */
+  --gr-bg:        #faf8f2;
+  --gr-ink:       #0f0e0b;
+  --gr-mid:       #9e9b91;
+  --gr-subtle:    #e8e3d6;
+  --gr-accent:    #b8973a;
+  --gr-accent2:   #5a8fa8;
+  --gr-accent3:   #6b8c52;
+  --gr-danger:    #a83030;
+  --gr-surface:   #eee8d8;
+
+  /* Typography */
+  --gr-mono:  'Courier Prime', 'Courier New', Courier, monospace;
+  --gr-serif: 'Lora', Georgia, serif;
+
+  /* Scale */
+  --gr-text-xs:   0.68rem;
+  --gr-text-sm:   0.78rem;
+  --gr-text-base: 0.92rem;
+  --gr-text-md:   1.05rem;
+  --gr-text-lg:   1.25rem;
+  --gr-text-xl:   1.6rem;
+
+  /* Spacing */
+  --gr-unit: 1rem;
+
+  /* Borders */
+  --gr-border:        1px solid var(--gr-ink);
+  --gr-border-subtle: 1px solid var(--gr-subtle);
+  --gr-border-dashed: 1px dashed var(--gr-subtle);
+
+  /* Transitions — deliberate, weighted */
+  --gr-ease:      0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --gr-ease-fast: 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Noise */
+  --gr-noise-opacity: 0.03;
+
+  /* Luxury spacing multiplier */
+  --gr-space: 1.15;
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--gr-bg);
+  color: var(--gr-ink);
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Grain noise texture — inline SVG, zero external requests */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--gr-noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+a { color: var(--gr-accent); text-decoration: none; transition: color var(--gr-ease); }
+a:hover { color: var(--gr-ink); }
+img, svg { display: block; max-width: 100%; }
+
+/* ============================================================
+   3. TYPOGRAPHY
+   ============================================================ */
+.gr-h1, .gr-h2, .gr-h3, .gr-h4 {
+  font-family: var(--gr-mono);
+  font-weight: 700;
+  color: var(--gr-ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.gr-h1 { font-size: var(--gr-text-xl); margin-bottom: calc(var(--gr-unit) * 1.75); }
+.gr-h2 { font-size: var(--gr-text-lg); margin-bottom: calc(var(--gr-unit) * 1.25); }
+.gr-h3 { font-size: var(--gr-text-md); margin-bottom: var(--gr-unit); }
+.gr-h4 { font-size: var(--gr-text-base); margin-bottom: calc(var(--gr-unit) * 0.75); }
+
+.gr-prose {
+  font-family: var(--gr-serif);
+  font-size: var(--gr-text-md);
+  font-weight: 500;
+  line-height: 1.85;
+  color: var(--gr-ink);
+  max-width: 66ch;
+}
+.gr-prose p + p { margin-top: var(--gr-unit); }
+
+.gr-label {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gr-mid);
+}
+.gr-label--accent  { color: var(--gr-accent); }
+.gr-label--accent2 { color: var(--gr-accent2); }
+.gr-label--accent3 { color: var(--gr-accent3); }
+
+.gr-muted { color: var(--gr-mid); font-size: var(--gr-text-sm); }
+
+.gr-code {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  background: var(--gr-surface);
+  padding: 0.15em 0.4em;
+  color: var(--gr-accent);
+}
+
+.gr-pre {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  background: var(--gr-surface);
+  border: var(--gr-border-subtle);
+  padding: var(--gr-unit);
+  overflow-x: auto;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+/* ============================================================
+   4. LAYOUT
+   ============================================================ */
+.gr-container       { max-width: 74ch; margin: 0 auto; padding: 0 var(--gr-unit); }
+.gr-container--wide { max-width: 100ch; margin: 0 auto; padding: 0 var(--gr-unit); }
+.gr-page            { padding: 3.5rem var(--gr-unit); }
+
+.gr-stack      { display: flex; flex-direction: column; }
+.gr-stack--sm  { gap: calc(var(--gr-unit) * 0.5); }
+.gr-stack--md  { gap: var(--gr-unit); }
+.gr-stack--lg  { gap: calc(var(--gr-unit) * 2); }
+
+.gr-row          { display: flex; align-items: center; }
+.gr-row--sm      { gap: calc(var(--gr-unit) * 0.5); }
+.gr-row--md      { gap: var(--gr-unit); }
+.gr-row--lg      { gap: calc(var(--gr-unit) * 2); }
+.gr-row--between { justify-content: space-between; }
+.gr-row--wrap    { flex-wrap: wrap; }
+
+/* ============================================================
+   5. GRID SYSTEM
+   ============================================================
+   Auto-fit responsive grid. No fixed columns. No breakpoint
+   math. Columns form automatically based on available space
+   and the minimum width you set.
+
+   Core usage:
+     <div class="gr-grid">                default  — min 22ch per column
+     <div class="gr-grid gr-grid--narrow">          min 14ch per column
+     <div class="gr-grid gr-grid--wide">            min 32ch per column
+     <div class="gr-grid gr-grid--xs">              min 10ch per column
+
+   Fixed column variants (use sparingly):
+     <div class="gr-grid gr-grid--2">     always 2 columns
+     <div class="gr-grid gr-grid--3">     always 3 columns
+     <div class="gr-grid gr-grid--4">     always 4 columns
+
+   Gap control:
+     <div class="gr-grid gr-grid--gap-none">  no gap
+     <div class="gr-grid gr-grid--gap-sm">    0.5rem
+     <div class="gr-grid gr-grid--gap-md">    1rem
+     <div class="gr-grid gr-grid--gap-lg">    2rem
+     <div class="gr-grid gr-grid--gap-xl">    3rem
+
+   Item spanning (inside any gr-grid):
+     <div class="gr-span-2">              span 2 columns
+     <div class="gr-span-3">              span 3 columns
+     <div class="gr-span-full">           span all columns
+
+   Alignment:
+     .gr-grid--top        align-items: start
+     .gr-grid--middle     align-items: center
+     .gr-grid--bottom     align-items: end
+     .gr-grid--stretch    align-items: stretch (default)
+
+   Item self-alignment:
+     .gr-self-top         align-self: start
+     .gr-self-middle      align-self: center
+     .gr-self-bottom      align-self: end
+     .gr-self-stretch     align-self: stretch
+   ============================================================ */
+
+/* ── Base grid ── */
+.gr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22ch, 100%), 1fr));
+  gap: calc(var(--gr-unit) * 1.5);
+  width: 100%;
+  align-items: start;
+}
+
+/* ── Width variants ── */
+.gr-grid--xs     { grid-template-columns: repeat(auto-fit, minmax(min(10ch, 100%), 1fr)); }
+.gr-grid--narrow { grid-template-columns: repeat(auto-fit, minmax(min(14ch, 100%), 1fr)); }
+.gr-grid--wide   { grid-template-columns: repeat(auto-fit, minmax(min(32ch, 100%), 1fr)); }
+.gr-grid--xl     { grid-template-columns: repeat(auto-fit, minmax(min(44ch, 100%), 1fr)); }
+
+/* ── Fixed column variants ── */
+.gr-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.gr-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.gr-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ── Gap variants ── */
+.gr-grid--gap-none { gap: 0; }
+.gr-grid--gap-sm   { gap: calc(var(--gr-unit) * 0.5); }
+.gr-grid--gap-md   { gap: var(--gr-unit); }
+.gr-grid--gap-lg   { gap: calc(var(--gr-unit) * 2); }
+.gr-grid--gap-xl   { gap: calc(var(--gr-unit) * 3); }
+
+/* ── Alignment ── */
+.gr-grid--top     { align-items: start; }
+.gr-grid--middle  { align-items: center; }
+.gr-grid--bottom  { align-items: end; }
+.gr-grid--stretch { align-items: stretch; }
+
+/* ── Item spanning ── */
+.gr-span-2    { grid-column: span 2; }
+.gr-span-3    { grid-column: span 3; }
+.gr-span-full { grid-column: 1 / -1; }
+
+/* ── Item self-alignment ── */
+.gr-self-top     { align-self: start; }
+.gr-self-middle  { align-self: center; }
+.gr-self-bottom  { align-self: end; }
+.gr-self-stretch { align-self: stretch; }
+
+/* ── Responsive collapse ──
+   Fixed variants collapse gracefully on smaller screens.
+   Auto-fit variants handle themselves — no rules needed. */
+@media (max-width: 640px) {
+  .gr-grid--3,
+  .gr-grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  .gr-span-3 { grid-column: span 2; }
+}
+
+@media (max-width: 480px) {
+  .gr-grid--2,
+  .gr-grid--3,
+  .gr-grid--4 { grid-template-columns: 1fr; }
+
+  .gr-span-2,
+  .gr-span-3,
+  .gr-span-full { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   5. FRAME
+   ============================================================ */
+.gr-frame {
+  border: var(--gr-border);
+  position: relative;
+}
+.gr-frame::before,
+.gr-frame::after,
+.gr-frame > .gr-corner-tr,
+.gr-frame > .gr-corner-bl {
+  position: absolute;
+  font-family: var(--gr-mono);
+  font-size: 0.9rem;
+  color: var(--gr-accent);
+  line-height: 1;
+  pointer-events: none;
+}
+.gr-frame::before         { content: '+'; top: -0.55rem; left: -0.35rem; }
+.gr-frame::after          { content: '+'; bottom: -0.55rem; right: -0.35rem; }
+.gr-frame > .gr-corner-tr { top: -0.55rem; right: -0.35rem; }
+.gr-frame > .gr-corner-bl { bottom: -0.55rem; left: -0.35rem; }
+.gr-frame > .gr-corner-tr::before { content: '+'; }
+.gr-frame > .gr-corner-bl::before { content: '+'; }
+
+.gr-frame--dashed { border-style: dashed; }
+.gr-frame--subtle { border-color: var(--gr-subtle); }
+.gr-frame--accent { border-color: var(--gr-accent); }
+.gr-frame__body   { padding: 3rem 3.5rem; }
+
+/* ============================================================
+   6. TOPBAR
+   ============================================================ */
+.gr-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1.5rem;
+  border-bottom: var(--gr-border-subtle);
+  font-size: var(--gr-text-xs);
+  color: var(--gr-mid);
+  letter-spacing: 0.08em;
+}
+.gr-topbar__dots { display: flex; gap: 0.4rem; align-items: center; }
+.gr-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.gr-dot--red    { background: var(--gr-accent); }
+.gr-dot--yellow { background: #c9a84c; }
+.gr-dot--green  { background: var(--gr-accent3); }
+
+/* ============================================================
+   7. NAV
+   ============================================================ */
+.gr-nav { display: flex; align-items: center; border-bottom: var(--gr-border-subtle); }
+.gr-nav__link {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.1em;
+  color: var(--gr-mid);
+  text-decoration: none;
+  padding: 0.65rem 0;
+  margin-right: 2rem;
+  border-bottom: 2px solid transparent;
+  transition: color var(--gr-ease), border-color var(--gr-ease);
+  display: inline-block;
+}
+.gr-nav__link:hover    { color: var(--gr-accent); border-bottom-color: var(--gr-accent); }
+.gr-nav__link.is-active { color: var(--gr-accent); border-bottom-color: var(--gr-accent); }
+
+/* ============================================================
+   8. RULE
+   ============================================================ */
+.gr-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: calc(var(--gr-unit) * 1.5) 0;
+}
+.gr-rule::before, .gr-rule::after { content: ''; flex: 1; height: 1px; background: var(--gr-subtle); }
+.gr-rule--plain  { display: block; height: 1px; background: var(--gr-subtle); border: none; }
+.gr-rule--dashed { display: block; height: 0; border: none; border-top: 1px dashed var(--gr-subtle); }
+.gr-rule__label {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gr-accent);
+  white-space: nowrap;
+}
+
+.gr-section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gr-accent);
+  font-weight: 700;
+  margin-bottom: calc(var(--gr-unit) * 1.1);
+}
+.gr-section-label::after { content: ''; flex: 1; height: 1px; background: var(--gr-subtle); }
+
+/* ============================================================
+   9. BUTTON
+   ============================================================ */
+.gr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  letter-spacing: 0.12em;
+  padding: 0.65rem 1.5rem;
+  border: var(--gr-border);
+  background: transparent;
+  color: var(--gr-ink);
+  cursor: pointer;
+  transition: background var(--gr-ease), color var(--gr-ease), border-color var(--gr-ease);
+  text-decoration: none;
+  user-select: none;
+  line-height: 1;
+  position: relative;
+}
+.gr-btn:hover { background: var(--gr-ink); color: var(--gr-bg); }
+.gr-btn:focus-visible {
+  outline: 2px solid var(--gr-accent);
+  outline-offset: 3px;
+}
+
+.gr-btn--primary { background: var(--gr-ink); color: var(--gr-bg); }
+.gr-btn--primary:hover { background: var(--gr-accent); border-color: var(--gr-accent); color: var(--gr-bg); }
+.gr-btn--primary:focus-visible { outline-color: var(--gr-accent); }
+
+.gr-btn--accent { border-color: var(--gr-accent); color: var(--gr-accent); }
+.gr-btn--accent:hover { background: var(--gr-accent); color: var(--gr-bg); }
+
+.gr-btn--ghost { border-color: var(--gr-subtle); color: var(--gr-mid); }
+.gr-btn--ghost:hover { border-color: var(--gr-ink); color: var(--gr-ink); background: transparent; }
+
+.gr-btn--sm { font-size: var(--gr-text-xs); padding: 0.35rem 0.75rem; }
+.gr-btn--lg { font-size: var(--gr-text-base); padding: 0.75rem 1.5rem; }
+
+.gr-btn:disabled, .gr-btn.is-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.gr-btn--bracket::before { content: '[ '; }
+.gr-btn--bracket::after  { content: ' ]'; }
+
+/* Loading state — animated mono dots */
+.gr-btn--loading {
+  pointer-events: none;
+  color: transparent !important;
+}
+.gr-btn--loading::after {
+  content: '...';
+  position: absolute;
+  color: currentColor;
+  animation: gr-loading-dots 1.2s step-end infinite;
+  letter-spacing: 0.05em;
+}
+.gr-btn--primary.gr-btn--loading::after { color: var(--gr-bg); }
+.gr-btn--accent.gr-btn--loading::after  { color: var(--gr-bg); }
+
+/* ============================================================
+   10. BADGE, CHIP, STATUS
+   ============================================================ */
+.gr-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.55rem;
+  border: var(--gr-border-subtle);
+  color: var(--gr-mid);
+  white-space: nowrap;
+}
+.gr-badge--accent  { border-color: var(--gr-accent);  color: var(--gr-accent);  }
+.gr-badge--accent2 { border-color: var(--gr-accent2); color: var(--gr-accent2); }
+.gr-badge--accent3 { border-color: var(--gr-accent3); color: var(--gr-accent3); }
+.gr-badge--filled  { background: var(--gr-ink); color: var(--gr-bg); border-color: var(--gr-ink); }
+
+.gr-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  border: var(--gr-border-subtle);
+  color: var(--gr-mid);
+  cursor: default;
+  transition: border-color var(--gr-ease), color var(--gr-ease);
+}
+.gr-chip:hover { border-color: var(--gr-accent); color: var(--gr-accent); }
+
+.gr-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.08em;
+}
+.gr-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: gr-pulse 2s ease infinite;
+}
+.gr-status--active  { color: var(--gr-accent3); }
+.gr-status--warning { color: #c9a84c; }
+.gr-status--error   { color: var(--gr-danger); }
+.gr-status--neutral { color: var(--gr-mid); }
+.gr-status--neutral::before { animation: none; }
+
+/* ============================================================
+   11. CARD
+   ============================================================ */
+.gr-card {
+  border: var(--gr-border-subtle);
+  padding: 2rem 2rem 1.75rem;
+  background: var(--gr-bg);
+  transition: border-color var(--gr-ease);
+}
+.gr-card:hover            { border-color: var(--gr-mid); }
+.gr-card--accent:hover    { border-color: var(--gr-accent); }
+.gr-card__label { font-family: var(--gr-mono); font-size: var(--gr-text-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gr-accent); margin-bottom: 0.6rem; }
+.gr-card__title { font-family: var(--gr-mono); font-size: var(--gr-text-base); font-weight: 700; color: var(--gr-ink); margin-bottom: 0.4rem; transition: color var(--gr-ease); }
+.gr-card:hover .gr-card__title { color: var(--gr-accent); }
+.gr-card__body  { font-family: var(--gr-serif); font-size: var(--gr-text-sm); color: var(--gr-mid); font-style: italic; line-height: 1.6; }
+.gr-card__footer { margin-top: 1rem; padding-top: 0.75rem; border-top: var(--gr-border-dashed); display: flex; align-items: center; justify-content: space-between; }
+
+/* ============================================================
+   12. LIST
+   ============================================================ */
+.gr-list { list-style: none; }
+.gr-list__item {
+  display: grid;
+  grid-template-columns: 3ch 1fr;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: var(--gr-border-dashed);
+  align-items: start;
+  transition: padding-left var(--gr-ease);
+}
+.gr-list__item:last-child { border-bottom: none; }
+.gr-list__item:hover { padding-left: 0.25rem; }
+.gr-list__idx   { font-family: var(--gr-mono); font-size: var(--gr-text-sm); color: var(--gr-mid); padding-top: 0.1rem; }
+.gr-list__title { font-family: var(--gr-mono); font-size: var(--gr-text-base); font-weight: 700; color: var(--gr-ink); margin-bottom: 0.2rem; transition: color var(--gr-ease); }
+.gr-list__item:hover .gr-list__title { color: var(--gr-accent); }
+.gr-list__desc  { font-family: var(--gr-serif); font-size: var(--gr-text-sm); color: var(--gr-mid); font-style: italic; line-height: 1.5; }
+
+/* ============================================================
+   13. FORMS
+   ============================================================ */
+.gr-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.gr-field__label {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gr-mid);
+}
+
+.gr-input, .gr-textarea, .gr-select {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-base);
+  color: var(--gr-ink);
+  background: var(--gr-bg);
+  border: var(--gr-border-subtle);
+  padding: 0.65rem 0.85rem;
+  outline: none;
+  transition: border-color var(--gr-ease), box-shadow var(--gr-ease);
+  width: 100%;
+  appearance: none;
+  border-radius: 0;
+}
+
+.gr-input:focus,
+.gr-textarea:focus,
+.gr-select:focus {
+  border-color: var(--gr-accent);
+  box-shadow: 0 0 0 3px rgba(184, 151, 58, 0.15);
+}
+
+.gr-input:focus-visible,
+.gr-textarea:focus-visible,
+.gr-select:focus-visible {
+  outline: none;
+}
+
+.gr-input::placeholder, .gr-textarea::placeholder {
+  color: var(--gr-mid);
+  font-style: italic;
+}
+
+.gr-textarea { resize: vertical; min-height: 8rem; line-height: 1.7; }
+
+/* Select wrapper — provides custom arrow */
+.gr-select-wrap {
+  position: relative;
+  display: block;
+}
+.gr-select-wrap .gr-select { padding-right: 2.5rem; }
+.gr-select-wrap::after {
+  content: '▾';
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  color: var(--gr-mid);
+  pointer-events: none;
+  transition: color var(--gr-ease);
+}
+.gr-select-wrap:focus-within::after { color: var(--gr-accent); }
+
+.gr-field__hint  { font-family: var(--gr-serif); font-size: var(--gr-text-xs); color: var(--gr-mid); font-style: italic; }
+.gr-field__error {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  color: var(--gr-danger);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.gr-field__error::before { content: '!'; }
+
+/* ============================================================
+   14. CURSOR
+   ============================================================ */
+.gr-cursor {
+  display: inline-block;
+  width: 0.5em; height: 0.85em;
+  background: var(--gr-accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: gr-blink 1s step-end infinite;
+}
+.gr-cursor--ink    { background: var(--gr-ink); }
+.gr-cursor--accent2 { background: var(--gr-accent2); }
+.gr-cursor--slow   { animation-duration: 1.6s; }
+.gr-cursor--fast   { animation-duration: 0.5s; }
+
+/* ============================================================
+   15. ASCII ART
+   ============================================================ */
+.gr-ascii { white-space: pre; font-family: var(--gr-mono); font-size: 0.65rem; line-height: 1.2; color: var(--gr-ink); letter-spacing: 0; }
+.gr-ascii--accent  { color: var(--gr-accent); }
+.gr-ascii--accent2 { color: var(--gr-accent2); }
+.gr-ascii--mid     { color: var(--gr-mid); }
+
+/* ============================================================
+   16. TABS (JS)
+   ============================================================ */
+.gr-tabs__nav { display: flex; border-bottom: var(--gr-border-subtle); }
+.gr-tabs__tab {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.1em;
+  color: var(--gr-mid);
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--gr-ease), border-color var(--gr-ease);
+}
+.gr-tabs__tab:hover    { color: var(--gr-accent); }
+.gr-tabs__tab.is-active { color: var(--gr-accent); border-bottom-color: var(--gr-accent); }
+.gr-tabs__panel { display: none; padding: calc(var(--gr-unit) * 1.5) 0; animation: gr-fadeUp 0.25s ease both; }
+.gr-tabs__panel.is-active { display: block; }
+
+/* ============================================================
+   17. MODAL (JS)
+   ============================================================ */
+.gr-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20,20,19,0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(2px);
+}
+.gr-modal-overlay.is-open { opacity: 1; pointer-events: all; }
+.gr-modal {
+  background: var(--gr-bg); border: var(--gr-border);
+  max-width: 56ch; width: 90%;
+  position: relative;
+  transform: translateY(8px);
+  transition: transform 0.2s ease;
+}
+.gr-modal-overlay.is-open .gr-modal { transform: translateY(0); }
+.gr-modal::before { content: '+'; position: absolute; top: -0.55rem; left: -0.35rem; font-family: var(--gr-mono); color: var(--gr-accent); }
+.gr-modal::after  { content: '+'; position: absolute; bottom: -0.55rem; right: -0.35rem; font-family: var(--gr-mono); color: var(--gr-accent); }
+.gr-modal__header { padding: 0.55rem 1.5rem; border-bottom: var(--gr-border-subtle); display: flex; align-items: center; justify-content: space-between; font-size: var(--gr-text-xs); color: var(--gr-mid); letter-spacing: 0.08em; }
+.gr-modal__close {
+  background: none;
+  border: none;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-base);
+  color: var(--gr-mid);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.5rem;
+  margin: -0.5rem;
+  transition: color var(--gr-ease);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gr-modal__close:hover { color: var(--gr-accent); }
+.gr-modal__close:focus-visible {
+  outline: 2px solid var(--gr-accent);
+  outline-offset: 2px;
+}
+.gr-modal__body   { padding: 2rem 2.5rem; }
+.gr-modal__footer { padding: 1rem 2.5rem; border-top: var(--gr-border-subtle); display: flex; justify-content: flex-end; gap: 0.75rem; }
+
+/* ============================================================
+   18. TOAST (JS)
+   ============================================================ */
+.gr-toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 40ch;
+}
+
+.gr-toast {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  letter-spacing: 0.04em;
+  padding: 0.75rem 1rem;
+  border: var(--gr-border);
+  background: var(--gr-bg);
+  color: var(--gr-ink);
+  min-width: 24ch;
+  pointer-events: all;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  transform: translateX(110%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+
+.gr-toast.is-visible { transform: translateX(0); opacity: 1; }
+
+.gr-toast__icon { flex-shrink: 0; color: var(--gr-accent); line-height: 1.5; }
+.gr-toast--success .gr-toast__icon { color: var(--gr-accent3); }
+.gr-toast--warning .gr-toast__icon { color: #c9a84c; }
+.gr-toast--error   .gr-toast__icon { color: var(--gr-danger); }
+.gr-toast__body  { flex: 1; line-height: 1.5; }
+.gr-toast__close {
+  background: none;
+  border: none;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-base);
+  color: var(--gr-mid);
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  align-self: center;
+  transition: color var(--gr-ease);
+  min-width: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gr-toast__close:hover { color: var(--gr-accent); }
+
+@media (max-width: 480px) {
+  .gr-toast-container {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: 100%;
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  .gr-toast {
+    transform: translateY(110%);
+    min-width: 0;
+    width: 100%;
+  }
+  .gr-toast.is-visible { transform: translateY(0); }
+}
+
+/* ============================================================
+   19. DROPDOWN (JS)
+   ============================================================ */
+.gr-dropdown { position: relative; display: inline-block; }
+
+.gr-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: var(--gr-bg);
+  border: var(--gr-border);
+  min-width: 18ch;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  /* animation */
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.gr-dropdown__menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.gr-dropdown__item {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  padding: 0.55rem 0.85rem;
+  color: var(--gr-mid);
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  transition: color var(--gr-ease), background var(--gr-ease);
+  letter-spacing: 0.04em;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.gr-dropdown__item:hover { color: var(--gr-ink); background: var(--gr-surface); }
+.gr-dropdown__item:focus-visible {
+  outline: none;
+  color: var(--gr-ink);
+  background: var(--gr-surface);
+}
+.gr-dropdown__divider { height: 1px; background: var(--gr-subtle); margin: 0.25rem 0; }
+
+/* ============================================================
+   20. TABLE
+   ============================================================ */
+.gr-table { width: 100%; border-collapse: collapse; font-family: var(--gr-mono); font-size: var(--gr-text-sm); }
+.gr-table th { font-size: var(--gr-text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--gr-accent); text-align: left; padding: 0.5rem 0.75rem; border-bottom: var(--gr-border); font-weight: 400; }
+.gr-table td { padding: 0.65rem 0.75rem; border-bottom: var(--gr-border-dashed); color: var(--gr-ink); vertical-align: top; }
+.gr-table tr:last-child td { border-bottom: none; }
+.gr-table tr:hover td { background: var(--gr-surface); }
+
+/* ============================================================
+   21. PROGRESS
+   ============================================================ */
+.gr-progress__label { display: flex; justify-content: space-between; font-family: var(--gr-mono); font-size: var(--gr-text-xs); color: var(--gr-mid); margin-bottom: 0.35rem; letter-spacing: 0.06em; }
+.gr-progress__bar  { height: 4px; background: var(--gr-subtle); position: relative; overflow: hidden; }
+.gr-progress__fill { height: 100%; background: var(--gr-accent); transition: width 0.6s ease; }
+.gr-progress__fill--accent2 { background: var(--gr-accent2); }
+.gr-progress__fill--accent3 { background: var(--gr-accent3); }
+
+/* ============================================================
+   22. UTILITIES
+   ============================================================ */
+.gr-text-accent  { color: var(--gr-accent); }
+.gr-text-accent2 { color: var(--gr-accent2); }
+.gr-text-accent3 { color: var(--gr-accent3); }
+.gr-text-mid     { color: var(--gr-mid); }
+.gr-text-ink     { color: var(--gr-ink); }
+
+.gr-mt-sm { margin-top: calc(var(--gr-unit) * 0.5); }
+.gr-mt-md { margin-top: var(--gr-unit); }
+.gr-mt-lg { margin-top: calc(var(--gr-unit) * 2); }
+.gr-mb-sm { margin-bottom: calc(var(--gr-unit) * 0.5); }
+.gr-mb-md { margin-bottom: var(--gr-unit); }
+.gr-mb-lg { margin-bottom: calc(var(--gr-unit) * 2); }
+
+.gr-hidden { display: none !important; }
+.gr-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ============================================================
+   23. ANIMATIONS
+   ============================================================ */
+@keyframes gr-blink  { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes gr-pulse  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.85)} }
+@keyframes gr-fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes gr-fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+@keyframes gr-loading-dots {
+  0%   { content: '.  '; }
+  33%  { content: '.. '; }
+  66%  { content: '...'; }
+  100% { content: '.  '; }
+}
+
+.gr-animate-in  { animation: gr-fadeIn 0.4s ease both; }
+.gr-animate-up  { animation: gr-fadeUp 0.4s ease both; }
+.gr-delay-1 { animation-delay: 0.1s; }
+.gr-delay-2 { animation-delay: 0.2s; }
+.gr-delay-3 { animation-delay: 0.3s; }
+.gr-delay-4 { animation-delay: 0.4s; }
+.gr-delay-5 { animation-delay: 0.5s; }
+
+/* ============================================================
+   24. RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .gr-frame__body  { padding: 1.5rem; }
+  .gr-modal__body  { padding: 1.5rem; }
+  .gr-modal__footer { padding: 0.75rem 1.5rem; }
+  .gr-row          { flex-wrap: wrap; }
+  .gr-list__item   { grid-template-columns: 2.5ch 1fr; }
+}
+
+/* ============================================================
+   25. REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   26. NAVBAR
+   ============================================================ */
+.gr-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--gr-bg);
+  border-bottom: var(--gr-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem var(--gr-unit);
+}
+
+.gr-navbar__brand { display: flex; align-items: center; }
+
+.gr-navbar__logo {
+  font-family: var(--gr-mono);
+  font-weight: 700;
+  font-size: var(--gr-text-base);
+  color: var(--gr-ink);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color var(--gr-ease);
+}
+.gr-navbar__logo:hover { color: var(--gr-accent); }
+.gr-navbar__logo span  { color: var(--gr-accent); }
+
+.gr-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gr-navbar__link {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  color: var(--gr-mid);
+  text-decoration: none;
+  padding: 0.35rem 0.6rem;
+  letter-spacing: 0.04em;
+  transition: color var(--gr-ease);
+}
+.gr-navbar__link:hover     { color: var(--gr-ink); }
+.gr-navbar__link.is-active { color: var(--gr-accent); }
+
+@media (max-width: 480px) {
+  .gr-navbar__nav { gap: 0; }
+  .gr-navbar__link { font-size: var(--gr-text-xs); padding: 0.35rem 0.4rem; }
+}
+
+/* ============================================================
+   27. SECTION LABEL — STRONG MODIFIER
+   ============================================================ */
+.gr-section-label--strong {
+  font-size: var(--gr-text-sm);
+  letter-spacing: 0.28em;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--gr-accent);
+  margin-bottom: calc(var(--gr-unit) * 2);
+}
+.gr-section-label--strong::before {
+  content: '//';
+  color: var(--gr-mid);
+  font-weight: 400;
+  letter-spacing: 0;
+  margin-right: 0.6rem;
+}
+.gr-section-label--strong::after { display: none; }
+
+/* ============================================================
+   28. CALLOUT
+   ============================================================ */
+.gr-callout {
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--gr-accent);
+  background: var(--gr-surface);
+}
+
+.gr-callout__label {
+  display: block;
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gr-accent);
+  margin-bottom: 0.3rem;
+}
+
+.gr-callout__body {
+  font-family: var(--gr-mono);
+  font-size: var(--gr-text-sm);
+  color: var(--gr-ink);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.gr-callout--accent2 { border-left-color: var(--gr-accent2); }
+.gr-callout--accent2 .gr-callout__label { color: var(--gr-accent2); }
+
+.gr-callout--accent3 { border-left-color: var(--gr-accent3); }
+.gr-callout--accent3 .gr-callout__label { color: var(--gr-accent3); }
+
+.gr-callout--danger  { border-left-color: var(--gr-danger); }
+.gr-callout--danger  .gr-callout__label { color: var(--gr-danger); }
+
+.gr-callout--neutral { border-left-color: var(--gr-subtle); }
+.gr-callout--neutral .gr-callout__label { color: var(--gr-mid); }
+
+/* ============================================================
+   29. SURFACE — INK (dark inverted)
+   ============================================================ */
+.gr-surface--ink {
+  background: var(--gr-ink);
+  color: var(--gr-bg);
+}
+.gr-surface--ink .gr-nav__link          { color: var(--gr-mid); }
+.gr-surface--ink .gr-nav__link:hover,
+.gr-surface--ink .gr-nav__link.is-active { color: var(--gr-bg); }
+.gr-surface--ink .gr-navbar__link       { color: var(--gr-mid); }
+.gr-surface--ink .gr-navbar__link:hover,
+.gr-surface--ink .gr-navbar__link.is-active { color: var(--gr-bg); }
+.gr-surface--ink a                      { color: var(--gr-accent); }
+.gr-surface--ink a:hover                { color: var(--gr-bg); }
+.gr-surface--ink .gr-muted             { color: var(--gr-mid); }
+.gr-surface--ink hr,
+.gr-surface--ink [class*="gr-rule"]    { border-color: #2a2925; background: #2a2925; }
