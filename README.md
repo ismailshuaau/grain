@@ -2,6 +2,8 @@
 
 **Built into everything. Dependent on nothing.**
 
+**[Live demo →](https://ismailshuaau.github.io/grain)**
+
 Grain is a self-hosted UI framework designed for environments that can't rely on the internet — school networks, hospital intranets, offline kiosks, mesh networks, Raspberry Pi deployments, USB sticks. Copy the folder once. It runs forever.
 
 No CDN. No Google Fonts. No build step. No npm. No ongoing dependency on anything outside the folder you copied.
